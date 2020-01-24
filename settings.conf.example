@@ -1,0 +1,8 @@
+[mqttauth]
+server = spacegate.mainframe.lan
+port = 8883
+certfile = /etc/spacegate.mainframe.lan.crt
+# certfile = spacegate.mainframe.lan.crt
+username = user
+password = pw
+clientid = glass-door-controller

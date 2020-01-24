@@ -1,0 +1,38 @@
+[Unit]
+Description=Glass Door Controller
+After=network.target
+# do not restart if there are more than 30 fails in 1h
+# this makes the process visible in systemctl --failed
+StartLimitIntervalSec=3600
+StartLimitBurst=30
+
+[Service]
+Type=simple
+User=acs
+Group=acs
+ExecStart=/home/acs/glass-door.py
+WorkingDirectory=/home/acs/
+StandardOutput=journal
+StandardError=journal
+
+MemoryLimit=64M
+TasksMax=1
+
+ProtectSystem=strict
+ProtectHome=read-only
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+SystemCallFilter=@system-service @basic-io @network-io
+
+# restart on fail
+Restart=always
+RestartSec=60
+
+# Give a reasonable amount of time for the server to start up/shut down
+TimeoutSec=300
+
+WatchdogSec=30s
+
+[Install]
+WantedBy=multi-user.target
